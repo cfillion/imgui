@@ -6481,29 +6481,26 @@ void ImGui::RenderWindowDecorations(ImGuiWindow* window, const ImRect& title_bar
                     is_docking_transparent_payload = true;
 
             ImU32 bg_col = GetColorU32(GetWindowBgColorIdx(window));
-            if (window->ViewportOwned)
+
+            bool override_alpha = false;
+            float alpha = 1.0f;
+            if (g.NextWindowData.Flags & ImGuiNextWindowDataFlags_HasBgAlpha)
             {
-                if (is_docking_transparent_payload)
-                    window->Viewport->Alpha *= DOCKING_TRANSPARENT_PAYLOAD_ALPHA;
+                alpha = g.NextWindowData.BgAlphaVal;
+                override_alpha = true;
             }
-            else
+            if (is_docking_transparent_payload)
             {
-                // Adjust alpha. For docking
-                bool override_alpha = false;
-                float alpha = 1.0f;
-                if (g.NextWindowData.Flags & ImGuiNextWindowDataFlags_HasBgAlpha)
-                {
-                    alpha = g.NextWindowData.BgAlphaVal;
-                    override_alpha = true;
-                }
-                if (is_docking_transparent_payload)
+                if (window->ViewportOwned)
+                    window->Viewport->Alpha *= DOCKING_TRANSPARENT_PAYLOAD_ALPHA;
+                else
                 {
                     alpha *= DOCKING_TRANSPARENT_PAYLOAD_ALPHA; // FIXME-DOCK: Should that be an override?
                     override_alpha = true;
                 }
-                if (override_alpha)
-                    bg_col = (bg_col & ~IM_COL32_A_MASK) | (IM_F32_TO_INT8_SAT(alpha) << IM_COL32_A_SHIFT);
             }
+            if (override_alpha)
+                bg_col = (bg_col & ~IM_COL32_A_MASK) | (IM_F32_TO_INT8_SAT(alpha) << IM_COL32_A_SHIFT);
 
             // Render, for docked windows and host windows we ensure bg goes before decorations
             if (window->DockIsActive)
