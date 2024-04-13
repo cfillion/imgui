@@ -1989,7 +1989,7 @@ enum ImGuiLocKey : int
     ImGuiLocKey_WindowingPopup,
     ImGuiLocKey_WindowingUntitled,
     ImGuiLocKey_DockingHideTabBar,
-    ImGuiLocKey_DockingHoldShiftToDock,
+    // ImGuiLocKey_DockingHoldShiftToDock,
     ImGuiLocKey_DockingDragToUndockOrMoveNode,
     ImGuiLocKey_COUNT
 };

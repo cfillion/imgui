@@ -3649,7 +3649,7 @@ static const ImGuiLocEntry GLocalizationEntriesEnUS[] =
     { ImGuiLocKey_WindowingPopup,       "(Popup)"                               },
     { ImGuiLocKey_WindowingUntitled,    "(Untitled)"                            },
     { ImGuiLocKey_DockingHideTabBar,    "Hide tab bar###HideTabBar"             },
-    { ImGuiLocKey_DockingHoldShiftToDock,       "Hold SHIFT to enable Docking window."  },
+    // { ImGuiLocKey_DockingHoldShiftToDock,       "Hold SHIFT to enable Docking window."  },
     { ImGuiLocKey_DockingDragToUndockOrMoveNode,"Click and drag to move or undock whole node."    },
 };
 
@@ -19135,8 +19135,8 @@ void ImGui::BeginDockableDragDropSource(ImGuiWindow* window)
         // When ConfigDockingWithShift is set, display a tooltip to increase UI affordance.
         // We cannot set for HoveredWindowUnderMovingWindow != NULL here, as it is only valid/useful when drag and drop is already active
         // (because of the 'is_mouse_dragging_with_an_expected_destination' logic in UpdateViewportsNewFrame() function)
-        if (g.IO.ConfigDockingWithShift && g.MouseStationaryTimer >= 1.0f && g.ActiveId >= 1.0f)
-            SetTooltip("%s", LocalizeGetMsg(ImGuiLocKey_DockingHoldShiftToDock));
+        // if (g.IO.ConfigDockingWithShift && g.MouseStationaryTimer >= 1.0f && g.ActiveId >= 1.0f)
+        //     SetTooltip("%s", LocalizeGetMsg(ImGuiLocKey_DockingHoldShiftToDock));
         return;
     }
 
