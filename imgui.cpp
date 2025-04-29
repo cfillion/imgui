@@ -6540,7 +6540,8 @@ static ImVec2 CalcWindowSizeAfterConstraint(ImGuiWindow* window, const ImVec2& s
 
     // Minimum size
     ImVec2 size_min = CalcWindowMinSize(window);
-    return ImMax(new_size, size_min);
+    ImVec2 size_max = ImVec2(8192.f, 8192.f); // ReaImGui patch
+    return ImClamp(new_size, size_min, size_max);
 }
 
 static void CalcWindowContentSizes(ImGuiWindow* window, ImVec2* content_size_current, ImVec2* content_size_ideal)
@@ -7709,6 +7710,7 @@ bool ImGui::Begin(const char* name, bool* p_open, ImGuiWindowFlags flags)
 
         // Apply minimum/maximum window size constraints and final size
         window->SizeFull = CalcWindowSizeAfterConstraint(window, window->SizeFull);
+        window->SizeFull = ImMin(window->SizeFull, ImVec2(8192.f, 8192.f)); // ReaImGui patch
         window->Size = window->Collapsed && !(flags & ImGuiWindowFlags_ChildWindow) ? window->TitleBarRect().GetSize() : window->SizeFull;
 
         // POSITION
