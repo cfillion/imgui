@@ -1100,8 +1100,8 @@ void ImDrawList::AddConvexPolyFilled(const ImVec2* points, const int points_coun
             // Average normals
             const ImVec2& n0 = temp_normals[i0];
             const ImVec2& n1 = temp_normals[i1];
-            float dm_x = (n0.x + n1.x) * 0.5f;
-            float dm_y = (n0.y + n1.y) * 0.5f;
+            float dm_x = (n0.x + n1.x) * GImGui->CurrentDpiScale * 0.5f;
+            float dm_y = (n0.y + n1.y) * GImGui->CurrentDpiScale * 0.5f;
             IM_FIXNORMAL2F(dm_x, dm_y);
             dm_x *= AA_SIZE * 0.5f;
             dm_y *= AA_SIZE * 0.5f;
