@@ -4629,7 +4629,7 @@ static bool ImGui_ImplStbTrueType_FontSrcInit(ImFontAtlas* atlas, ImFontConfig* 
     if (src->MergeTarget && src->SizePixels == 0.0f)
         src->SizePixels = src->DstFont->Sources[0]->SizePixels;
 
-    if (src->SizePixels >= 0.0f)
+    if (src->SizePixels > 0.0f)
         bd_font_data->ScaleFactor = stbtt_ScaleForPixelHeight(&bd_font_data->FontInfo, 1.0f);
     else
         bd_font_data->ScaleFactor = stbtt_ScaleForMappingEmToPixels(&bd_font_data->FontInfo, 1.0f);
@@ -4672,7 +4672,7 @@ static bool ImGui_ImplStbTrueType_FontBakedInit(ImFontAtlas* atlas, ImFontConfig
         stbtt_GetFontVMetrics(&bd_font_data->FontInfo, &unscaled_ascent, &unscaled_descent, &unscaled_line_gap);
         baked->Ascent = ImCeil(unscaled_ascent * scale_for_layout);
         baked->Descent = ImFloor(unscaled_descent * scale_for_layout);
-        baked->LineHeight = baked->Size;
+        baked->LineHeight = src->SizePixels > 0.0f ? baked->Size : baked->Ascent - baked->Descent;
     }
     return true;
 }
