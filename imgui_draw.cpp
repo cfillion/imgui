@@ -4490,6 +4490,8 @@ static ImFontGlyph* ImFontBaked_BuildLoadGlyph(ImFontBaked* baked, ImWchar codep
     {
         atlas->FontLoader->FontAddFallbackSrc(atlas, font, codepoint);
 
+        ImFontGlyph *glyph = NULL;
+
         for (; src_n < font->Sources.Size; ++src_n)
         {
             ImFontConfig* src = font->Sources[src_n];
@@ -4516,10 +4518,12 @@ static ImFontGlyph* ImFontBaked_BuildLoadGlyph(ImFontBaked* baked, ImWchar codep
                 }
             }
 
-            ImFontGlyph* glyph = loadGlyph(src_n);
-            if (glyph || no_fallback)
-                return glyph;
+            if (!glyph)
+                glyph = loadGlyph(src_n);
         }
+
+        if (glyph || no_fallback)
+            return glyph;
     }
 
     // Lazily load fallback glyph
