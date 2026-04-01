@@ -16608,9 +16608,12 @@ ImGuiViewportP* ImGui::AddUpdateViewport(ImGuiWindow* window, ImGuiID id, const 
         g.DrawListSharedData.ClipRectFullscreen.z = ImMax(g.DrawListSharedData.ClipRectFullscreen.z, viewport->Pos.x + viewport->Size.x);
         g.DrawListSharedData.ClipRectFullscreen.w = ImMax(g.DrawListSharedData.ClipRectFullscreen.w, viewport->Pos.y + viewport->Size.y);
 
-        // Store initial DpiScale before the OS platform window creation, based on expected monitor data.
-        // This is so we can select an appropriate font size on the first frame of our window lifetime
+        // Store initial DpiScale and FramebufferScale before the OS platform window creation, based on
+        // expected monitor data. This is so we can select an appropriate font size on the first frame
+        // of our window lifetime (see UpdateCurrentFontSize which uses FramebufferScale as rasterizer density).
         viewport->DpiScale = GetViewportPlatformMonitor(viewport)->DpiScale;
+        const float fb_scale = ImCeil(viewport->DpiScale);
+        viewport->FramebufferScale = ImVec2(fb_scale, fb_scale);
     }
 
     viewport->Window = window;
