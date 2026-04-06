@@ -16611,6 +16611,8 @@ ImGuiViewportP* ImGui::AddUpdateViewport(ImGuiWindow* window, ImGuiID id, const 
         // Store initial DpiScale before the OS platform window creation, based on expected monitor data.
         // This is so we can select an appropriate font size on the first frame of our window lifetime
         viewport->DpiScale = GetViewportPlatformMonitor(viewport)->DpiScale;
+        const float fb_scale = ImCeil(viewport->DpiScale);
+        viewport->FramebufferScale = ImVec2(fb_scale, fb_scale);
     }
 
     viewport->Window = window;
